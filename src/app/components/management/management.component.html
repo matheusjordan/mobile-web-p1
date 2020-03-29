@@ -1,0 +1,51 @@
+<mat-toolbar>
+  <mat-label>
+    Administrativo
+  </mat-label>
+
+  <button mat-button>
+    <mat-icon>exit_to_app</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div>
+  <button mat-button>
+    <mat-label>
+      Adicionar Beacon
+    </mat-label>
+    <mat-icon>add_box</mat-icon>
+  </button>
+</div>
+
+<div>
+  <table mat-table [dataSource]="data">
+
+    <ng-container matColumnDef="cod">
+      <th mat-header-cell *matHeaderCellDef> Cód </th>
+      <td mat-cell *matCellDef="let element"> {{ element.cod }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="age">
+      <th mat-header-cell *matHeaderCellDef> Age </th>
+      <td mat-cell *matCellDef="let element"> {{ element.age }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-button *ngFor="let action of element.actions">
+          {{ action }}
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+</div>
