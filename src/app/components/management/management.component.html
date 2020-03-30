@@ -3,13 +3,13 @@
     Administrativo
   </mat-label>
 
-  <button mat-button>
+  <button mat-button class="exit-btn">
     <mat-icon>exit_to_app</mat-icon>
   </button>
 </mat-toolbar>
 
-<div>
-  <button mat-button>
+<div class="content-container">
+  <button mat-button (click)="openCreateBeacon()">
     <mat-label>
       Adicionar Beacon
     </mat-label>
@@ -17,8 +17,8 @@
   </button>
 </div>
 
-<div>
-  <table mat-table [dataSource]="data">
+<div class="content-container">
+  <table mat-table [dataSource]="data" class="data-table">
 
     <ng-container matColumnDef="cod">
       <th mat-header-cell *matHeaderCellDef> Cód </th>
@@ -37,7 +37,7 @@
 
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell *matCellDef="let element" class="actions-col">
         <button mat-button *ngFor="let action of element.actions">
           {{ action }}
         </button>
