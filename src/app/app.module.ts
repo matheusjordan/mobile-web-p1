@@ -8,6 +8,7 @@ import { MaterialModule } from './shared/modules/material/material.module';
 import { LoginComponent } from './components/login/login.component';
 import { ManagementComponent } from './components/management/management.component';
 import { BeaconComponent } from './components/beacon/beacon.component';
+import { ComponentsModule } from './shared/components/components.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { BeaconComponent } from './components/beacon/beacon.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    ComponentsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

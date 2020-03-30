@@ -1,1 +1,48 @@
-<p>beacon works!</p>
+<mat-toolbar>
+  <mat-label> {{ isEdit ? 'Editar' : 'Novo' }} Beacon</mat-label>
+</mat-toolbar>
+
+<div class="content-container">
+  <form class="beacon-form">
+    <mat-form-field>
+      <mat-label>
+        Local
+      </mat-label>
+      <input matInput type="text">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>
+        Identificador
+      </mat-label>
+      <input matInput type="text">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>
+        Tipo de conteúdo
+      </mat-label>
+      <mat-select>
+        <mat-option *ngFor="let option of selectOptions" [value]="option">
+          {{ option }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>
+        Legenda
+      </mat-label>
+      <textarea matInput></textarea>
+    </mat-form-field>
+  </form>
+</div>
+
+<div class="btns-container">
+  <button mat-button (click)="closeDialog()">
+    Cancelar
+  </button>
+  <button mat-button>
+    Salvar
+  </button>
+</div>

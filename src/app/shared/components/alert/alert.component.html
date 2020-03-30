@@ -1,0 +1,18 @@
+<mat-toolbar>
+  <mat-label>
+    {{ toolbarText }}
+  </mat-label>
+</mat-toolbar>
+
+<div class="content-container">
+  {{ contentText }}
+</div>
+
+<div class="btns-container">
+  <button mat-button (click)="closeDialog()">
+    {{ cancelText }}
+  </button>
+  <button mat-button>
+    {{ okText }}
+  </button>
+</div>

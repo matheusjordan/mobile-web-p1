@@ -3,7 +3,7 @@
     Administrativo
   </mat-label>
 
-  <button mat-button class="exit-btn">
+  <button mat-button class="exit-btn" (click)="openExit()">
     <mat-icon>exit_to_app</mat-icon>
   </button>
 </mat-toolbar>
@@ -38,7 +38,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element" class="actions-col">
-        <button mat-button *ngFor="let action of element.actions">
+        <button mat-button *ngFor="let action of element.actions" (click)="treatClick(action)">
           {{ action }}
         </button>
       </td>

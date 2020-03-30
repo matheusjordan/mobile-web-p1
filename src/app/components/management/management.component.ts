@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { BeaconComponent } from '../beacon/beacon.component';
+import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
 
 @Component({
   selector: 'app-management',
@@ -33,8 +34,50 @@ export class ManagementComponent implements OnInit {
 
       maxHeight: '500px',
       minHeight: '300px',
-      height: '80vh',
+      height: 'fit-content',
+
+      panelClass: 'alert-dialog'
+    });
+  }
+
+  openEditBeacon() {
+    this.dialogRef.open(BeaconComponent, {
+      maxWidth: '600px',
+      minWidth: '300px',
+      width: '80vw',
+
+      maxHeight: '500px',
+      minHeight: '300px',
+      height: 'fit-content',
+
+      panelClass: 'alert-dialog',
+
+      data: { isEdit: true }
+    });
+  }
+
+  openExit() {
+    this.dialogRef.open(AlertComponent, {
+      width: 'fit-content',
+      height: 'fit-content',
+
+      data: {
+        toolbarText: 'Sair',
+        okText: 'sair',
+        cancelText: 'cancelar',
+        contentText: 'Deseja sair da plataforma ?'
+      },
+
+      panelClass: 'alert-dialog'
     })
+  }
+
+  treatClick(action: string) {
+    switch (action) {
+      case 'editar':
+        this.openEditBeacon();
+        break;
+    }
   }
 
 }
