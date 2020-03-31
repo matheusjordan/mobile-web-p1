@@ -3,26 +3,26 @@
 </mat-toolbar>
 
 <div class="content-container">
-  <form class="beacon-form">
+  <form class="beacon-form" [formGroup]="form">
     <mat-form-field>
       <mat-label>
         Local
       </mat-label>
-      <input matInput type="text">
+      <input matInput type="text" formControlName="name">
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>
         Identificador
       </mat-label>
-      <input matInput type="text">
+      <input matInput type="text" formControlName="cod">
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>
         Tipo de conteúdo
       </mat-label>
-      <mat-select>
+      <mat-select formControlName="type">
         <mat-option *ngFor="let option of selectOptions" [value]="option">
           {{ option }}
         </mat-option>
@@ -33,7 +33,7 @@
       <mat-label>
         Legenda
       </mat-label>
-      <textarea matInput></textarea>
+      <textarea matInput formControlName="legends"></textarea>
     </mat-form-field>
   </form>
 </div>
@@ -42,7 +42,7 @@
   <button mat-button (click)="closeDialog()">
     Cancelar
   </button>
-  <button mat-button>
+  <button mat-button (click)="isEdit ? editBeacon() : saveBeacon()" [disabled]="form.invalid">
     Salvar
   </button>
 </div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { BeaconComponent } from '../beacon/beacon.component';
 import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
+import { BeaconService } from '../beacon/beacon.service';
 
 @Component({
   selector: 'app-management',
@@ -10,20 +11,18 @@ import { AlertComponent } from 'src/app/shared/components/alert/alert.component'
 })
 export class ManagementComponent implements OnInit {
 
-  displayedColumns = ['cod', 'name', 'age', 'actions'];
+  displayedColumns = ['cod', 'name', 'type', 'actions'];
 
-  data = [
-    { id: 1, cod: '0098', name: "Joao felipe", age: 18, actions: [ 'editar', 'remover' ] },
-    { id: 2, cod: '0097', name: "Matheus jodan", age: 15, actions: [ 'editar', 'remover' ] },
-    { id: 3, cod: '0096', name: "Maria do bairro", age: 19, actions: [ 'editar', 'remover' ] },
-    { id: 4, cod: '0095', name: "Alan kardec", age: 25, actions: [ 'editar', 'remover' ] },
-  ];
+  data = [];
 
   constructor(
-    private dialogRef: MatDialog
+    private dialogRef: MatDialog,
+
+    private beaconService: BeaconService
   ) { }
 
   ngOnInit() {
+    this.getBeacons();
   }
 
   openCreateBeacon() {
@@ -38,6 +37,11 @@ export class ManagementComponent implements OnInit {
 
       panelClass: 'alert-dialog'
     });
+
+    this.dialogRef.afterAllClosed
+      .subscribe(
+        () => this.getBeacons()
+      );
   }
 
   openEditBeacon() {
@@ -54,6 +58,27 @@ export class ManagementComponent implements OnInit {
 
       data: { isEdit: true }
     });
+
+    this.dialogRef.afterAllClosed
+      .subscribe(
+        () => this.getBeacons()
+      );
+  }
+
+  openDelete() {
+    this.dialogRef.open(AlertComponent, {
+      width: 'fit-content',
+      height: 'fit-content',
+
+      data: {
+        toolbarText: 'Remover',
+        okText: 'remover',
+        cancelText: 'cancelar',
+        contentText: 'Deseja remover o item ?'
+      },
+
+      panelClass: 'alert-dialog'
+    });
   }
 
   openExit() {
@@ -69,7 +94,7 @@ export class ManagementComponent implements OnInit {
       },
 
       panelClass: 'alert-dialog'
-    })
+    });
   }
 
   treatClick(action: string) {
@@ -77,7 +102,33 @@ export class ManagementComponent implements OnInit {
       case 'editar':
         this.openEditBeacon();
         break;
+
+      case 'remover':
+        this.openDelete();
+        break;
     }
   }
 
+  private getBeacons() {
+    this.data = this.beaconService.beacons
+      .map(
+        (beacon: any) => {
+          return {...beacon, actions: ['editar', 'remover']}
+        }
+      );
+  }
+
+  private deleteBeacon(id: any) {
+    this.beaconService.delBeacon(id)
+      .subscribe(
+        res => {
+          this.beaconService.beacons
+            = this.beaconService.beacons.filter(
+              (beacon: any) => {
+                return beacon.id !== id
+              }
+            );
+        }
+      );
+  }
 }

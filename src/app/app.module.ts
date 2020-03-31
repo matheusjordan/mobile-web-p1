@@ -9,6 +9,9 @@ import { LoginComponent } from './components/login/login.component';
 import { ManagementComponent } from './components/management/management.component';
 import { BeaconComponent } from './components/beacon/beacon.component';
 import { ComponentsModule } from './shared/components/components.module';
+import { HttpClientModule } from '@angular/common/http';
+import { BeaconService } from './components/beacon/beacon.service';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,10 +24,15 @@ import { ComponentsModule } from './shared/components/components.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
     MaterialModule,
     ComponentsModule
   ],
-  providers: [],
+  providers: [
+    BeaconService
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     BeaconComponent
