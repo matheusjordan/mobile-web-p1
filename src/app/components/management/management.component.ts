@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { BeaconComponent } from '../beacon/beacon.component';
 import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
@@ -44,7 +44,7 @@ export class ManagementComponent implements OnInit {
       );
   }
 
-  openEditBeacon() {
+  openEditBeacon(beacon: any) {
     this.dialogRef.open(BeaconComponent, {
       maxWidth: '600px',
       minWidth: '300px',
@@ -56,7 +56,7 @@ export class ManagementComponent implements OnInit {
 
       panelClass: 'alert-dialog',
 
-      data: { isEdit: true }
+      data: { isEdit: true, beacon }
     });
 
     this.dialogRef.afterAllClosed
@@ -65,7 +65,7 @@ export class ManagementComponent implements OnInit {
       );
   }
 
-  openDelete() {
+  openDelete(beacon: any) {
     this.dialogRef.open(AlertComponent, {
       width: 'fit-content',
       height: 'fit-content',
@@ -77,8 +77,19 @@ export class ManagementComponent implements OnInit {
         contentText: 'Deseja remover o item ?'
       },
 
-      panelClass: 'alert-dialog'
+      panelClass: 'alert-dialog',
+      id: '666'
     });
+
+    this.dialogRef.getDialogById('666').afterClosed()
+      .subscribe(
+        (res: any) => {
+          if (res) {
+            this.beaconService.beacons;
+            this.deleteBeacon(beacon);
+          }
+        }
+      )
   }
 
   openExit() {
@@ -97,14 +108,14 @@ export class ManagementComponent implements OnInit {
     });
   }
 
-  treatClick(action: string) {
+  treatClick(action: string, beacon: any) {
     switch (action) {
       case 'editar':
-        this.openEditBeacon();
+        this.openEditBeacon(beacon);
         break;
 
       case 'remover':
-        this.openDelete();
+        this.openDelete(beacon);
         break;
     }
   }
@@ -118,17 +129,20 @@ export class ManagementComponent implements OnInit {
       );
   }
 
-  private deleteBeacon(id: any) {
-    this.beaconService.delBeacon(id)
-      .subscribe(
-        res => {
-          this.beaconService.beacons
-            = this.beaconService.beacons.filter(
-              (beacon: any) => {
-                return beacon.id !== id
-              }
-            );
+  private deleteBeacon(beacon: any) {
+    this.beaconService.beacons
+      = this.beaconService.beacons.filter(
+        (tempBeacon: any) => {
+          return tempBeacon.cod !== beacon.cod
         }
       );
+
+    this.getBeacons();
+
+    // this.beaconService.delBeacon(id)
+    //   .subscribe(
+    //     res => {
+    //     }
+    //   );
   }
 }

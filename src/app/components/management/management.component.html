@@ -38,7 +38,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element" class="actions-col">
-        <button mat-button *ngFor="let action of element.actions" (click)="treatClick(action)">
+        <button mat-button *ngFor="let action of element.actions" (click)="treatClick(action, element)">
           {{ action }}
         </button>
       </td>

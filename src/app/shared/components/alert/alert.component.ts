@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 
 interface AlertModal {
   okText: string;
@@ -21,7 +21,7 @@ export class AlertComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: AlertModal,
-    private dialogRef: MatDialog
+    private dialogRef: MatDialogRef<any>
   ) { }
 
   ngOnInit() {
@@ -33,8 +33,8 @@ export class AlertComponent implements OnInit {
     }
   }
 
-  closeDialog() {
-    this.dialogRef.closeAll();
+  closeDialog(ok = false) {
+    this.dialogRef.close(ok);
   }
 
 }

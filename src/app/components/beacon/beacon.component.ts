@@ -39,7 +39,7 @@ export class BeaconComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
-    private dialogRef: MatDialog,
+    private dialogRef: MatDialogRef<any>,
     private fb: FormBuilder,
 
     private beaconService: BeaconService,
@@ -50,11 +50,13 @@ export class BeaconComponent implements OnInit {
 
     if (this.data) {
       this.isEdit = this.data.isEdit;
+      this.form.patchValue(this.data.beacon);
+      this.form.get('cod').disable();
     }
   }
 
   closeDialog() {
-    this.dialogRef.closeAll();
+    this.dialogRef.close();
   }
 
   saveBeacon() {
@@ -68,20 +70,21 @@ export class BeaconComponent implements OnInit {
     //     }
     //   )
 
-    this.dialogRef.closeAll();
+    this.dialogRef.close();
   }
 
   editBeacon() {
-    const beacon = new Beacon(this.form.value);
+    const beacon = new Beacon({...this.form.value, cod: this.data.beacon.cod });
 
     this.beaconService.beacons
       = this.beaconService.beacons.map(
         (tempBeacon: any) => {
-          if (tempBeacon.id === beacon.id) {
+
+          if (tempBeacon.cod === beacon.cod) {
             tempBeacon = beacon;
           }
 
-          return beacon;
+          return tempBeacon;
         }
       )
 
@@ -90,7 +93,7 @@ export class BeaconComponent implements OnInit {
     //     this.getBeacons();
     //   }
     // )
-    this.dialogRef.closeAll();
+    this.dialogRef.close();
   }
 
   private createForm() {
@@ -99,7 +102,7 @@ export class BeaconComponent implements OnInit {
       name: ['', [Validators.required]],
       type: ['', [Validators.required]],
       // content: [null, Validators.required],
-      legends: [null, [Validators.required]]
+      legends: [null, [Validators.required]],
     })
   }
 

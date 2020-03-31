@@ -12,7 +12,7 @@
   <button mat-button (click)="closeDialog()">
     {{ cancelText }}
   </button>
-  <button mat-button>
+  <button mat-button (click)="closeDialog(true)">
     {{ okText }}
   </button>
 </div>
